@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
+
+  <script src="./js/sessao.js"></script>
+
+
+  <title>Cadastro</title>
+</head>
+<body id="register">
+  <div class="alerta_erro">
+    <div class="card_erro" id="cardErro">
+      <span id="mensagem_erro"></span>
+    </div>
+  </div>
+  
+  <main>
+    <h1>Cadastro</h1>
+    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing</h3>
+
+    <form action="#">
+      <div class="form-field">
+        <label for="username">Nome de usuário</label>
+        <input type="text" name="username" id="input_username" placeholder="Digite o seu nome de usuário">
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="input_email" placeholder="Digite o seu email">
+      </div>
+
+      <div class="form-field">
+        <label for="password">Senha</label>
+        <input type="password" name="password" id="input_password" placeholder="Digite a sua senha">
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword">Senha</label>
+        <input type="password" name="confirmPassword" id="input_confirm_password" placeholder="Confirme sua senha">
+      </div>
+      <button class="btn-primary" onclick="cadastrar()">Cadastrar</button>
+    </form>
+  </main>
+</body>
+</html>
+
+<script>
+  function cadastrar() {
+    // aguardar();
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var userVar = input_username.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_password.value;
+    var confirmacaoSenhaVar = input_confirm_password.value;
+    console.log(userVar, emailVar, senhaVar, confirmacaoSenhaVar);
+    // var empresaVar = listaEmpresas.value
+    if (
+      userVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      confirmacaoSenhaVar == ""
+      // empresaVar == ""
+    ) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Mensagem de erro para todos os campos em branco)";
+
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
+    }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        userServer: userVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+        // empresaServer: empresaVar
+      }),
+    })
+    .then(function (resposta) {
+        console.log('entrou');
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  // function listar() {
+  //   fetch("/empresas/listar", {
+  //     method: "GET",
+  //   })
+  //     .then(function (resposta) {
+  //       resposta.json().then((empresas) => {
+  //         empresas.forEach((empresa) => {
+  //           listaEmpresas.innerHTML += `<option value='${empresa.id}'>${empresa.cnpj}</option>`;
+  //         });
+  //       });
+  //     })
+  //     .catch(function (resposta) {
+  //       console.log(`#ERRO: ${resposta}`);
+  //     });
+  // }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>
