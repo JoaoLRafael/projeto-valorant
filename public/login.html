@@ -30,7 +30,7 @@
       <p>Leva apenas alguns minutos!</p>
     </div>
 
-    <form action="#">
+    <div class="form">
       <div class="form-field">
         <label for="email">Email</label>
         <input type="text" name="email" id="input_email" placeholder="Digite o seu email">
@@ -42,7 +42,7 @@
         <a href="#" class="red-link">Esqueceu a senha</a>
       </div>
       <button class="btn-primary" onclick="entrar()">Entrar</button>
-    </form>
+    </div>
   </main>
   <div id="div_erros_login"></div>
 </body>
@@ -89,7 +89,7 @@
           sessionStorage.EMAIL_USUARIO = json.email;
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.id;
-          // sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+          sessionStorage.PARTIDAS = JSON.stringify(json.partidas)
 
         });
         // setTimeout(function () {

@@ -2,81 +2,62 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
 
-    <title>AquaTech | Página Inicial</title>
+  <script src="./js/sessao.js"></script>
 
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <!-- ! MUDAR O NOME DO SITE -->
+  <title>Nome do site</title>
 </head>
 
-<body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="jogo_memoria.html">Jogo da memória</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-        <span class="version">v1.0.0</span>
-      </div>
-    </div>
-  </body>
+<body id="home">
+  <header>
+    <img class="header-logo" src="./assets/images/valorant-logo-red.svg">
+    <nav>
+      <ul class="navbar">
+        <li class="menu-item"><a href="/index.html">home</a></li>
+        <li class="menu-item"><a href="/index.html#about-valorant">sobre o valorant</a></li>
+        <li class="menu-item"><a href="/index.html#equality">igualdade</a></li>
+        <li class="menu-item"><a href="./agents.html">agentes</a></li>
+      </ul>
+    </nav>
+    <a class="btn-primary" href="/login.html">login</a>
+  </header>
 
+  <main class="introduction">
+    <h3 class="subtitle">frase muito boa, boa mesmo</h3>
+    <h1 class="main-title">nome do jogo</h1>
+    <button class="btn-primary">
+      <span class="btn-inner">
+        <span class="btn-slide"></span>
+        <span class="btn-content">jogar</span>
+      </span>
+    </button>
+  </main>
+
+  <section id="about-valorant">
+    <h1 class="main-title">sobre o jogo</h1>
+    <h3 class="subtitle">frase muito boa, boa mesmo</h3>
+    <div class="game-info">
+      <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tellus turpis, bibendum sed lectus sit amet, elementum faucibus augue. In nibh eros, faucibus ut dapibus quis, vulputate nec ante. Etiam sed urna faucibus purus egestas facilisis sed vitae odio. Maecenas lacus felis.</p>
+      <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tellus turpis, bibendum sed lectus sit amet, elementum faucibus augue. In nibh eros, faucibus ut dapibus quis, vulputate nec ante.</p>
+    </div>
+
+    <img class="agent" src="./assets/images/about-game-skye.png">
+  </section>
+  
+  <section id="equality">
+    <img class="agent" src="./assets/images/equatity-gekko.png">
+    <img class="championship" src="./assets/images/championship-final.png">
+    <h1 class="main-title">igualdade</h1>
+    <h3 class="subtitle">frase muito boa, boa mesmo</h3>
+    <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tellus turpis, bibendum sed lectus sit amet, elementum faucibus augue. In nibh eros, faucibus ut dapibus quis, vulputate nec ante. Etiam sed urna faucibus purus egestas facilisis sed vitae odio. Maecenas lacus felis. In nibh eros, faucibus ut dapibus quis, vulputate nec ante. Etiam sed urna faucibus purus egestas facilisis sed vitae odio. Maecenas lacus felis</p>
+    <p class="image-description">Final de torneio inclusivo de VALORANT foi a partida de maior audiência entre ligas do cenário brasileiro em 2024</p>
+  </section>
+</body>
 </html>
