@@ -23,6 +23,7 @@ function buscarUltimasCincoPartidasPorUsuario(idUsuario, limite_linhas) {
 
 function buscarPartidasEmTempoReal(idUsuario) {
   var instrucaoSql = `SELECT 
+    idPartida,
     tempoConclusao as tempoDeConclusao, 
     qtdMovimento as movimentos,
                     dataPartida,

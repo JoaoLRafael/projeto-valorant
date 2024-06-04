@@ -31,8 +31,7 @@ function buscarUltimasCincoPartidasPorUsuario(req, res) {
       } else {
         res.status(204).send("Nenhum resultado encontrado!");
       }
-    })
-    .catch(function (erro) {
+    }).catch(function (erro) {
       console.log(erro);
       console.log(
         "Houve um erro ao buscar as ultimas medidas.",

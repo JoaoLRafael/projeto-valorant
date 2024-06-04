@@ -29,138 +29,147 @@
 
 <!-- <body onload=" atualizarFeed()"> -->
 
-<body onload="pegarAsUltimasCincoPartidasDoUsuario()">
+  <body onload="inicializar()">
 
-  <div class="janela">
-    <div class="header-left">
-      <h1>AquaTech</h1>
-
-      <div class="hello">
-        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-      </div>
-
-      <div class="btn-nav-white">
-        <a href="./cards.html">
-          <h3>Aquários</h3>
-        </a>
-      </div>
-
-      <div class="btn-nav">
-
-        <h3>Gráficos</h3>
-      </div>
-      <div class="btn-logout" onclick="limparSessao()">
-        <h3>Sair</h3>
+    <div class="janela">
+      <div class="header-left">
+        <h1>AquaTech</h1>
+  
+        <div class="hello">
+          <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+        </div>
+  
+        <div class="btn-nav-white">
+          <a href="./cards.html">
+            <h3>Aquários</h3>
+          </a>
+        </div>
+  
+        <div class="btn-nav">
+          <h3>Gráficos</h3>
+        </div>
+        <div class="btn-logout" onclick="limparSessao()">
+          <h3>Sair</h3>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
-
-  <div class="grafico" style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <div style="width: 50%;">
-      <canvas id="myChart"></canvas>
     </div>
-  </div>
-</body>
-
-</html>
-<script>
-  const listaDeMovimentos = [];
-  const listaDeDatasDasPartidas = [];
-
-  const ctx = document.getElementById('myChart');
-
-  const grafico = new Chart(ctx, {
-    type: 'bar',
-    data: {
+  
+    <div class="grafico" style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 50%;">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </body>
+  
+  </html>
+  <script>
+    const listaDeMovimentos = [];
+    const listaDeDatasDasPartidas = [];
+    let dados = {
       labels: listaDeDatasDasPartidas,
       datasets: [{
         label: 'Quantidade de movimentos',
         data: listaDeMovimentos,
-        borderWidth: 1
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
       }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+    }
+  
+    const ctx = document.getElementById('myChart');
+    const grafico = new Chart(ctx, {
+      type: 'bar',
+      data: dados,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         }
       }
-    }
-  });
-
-  function atualizaGrafico() {
-    grafico.update();
-  }
-
-  // Pegar todas as partidas do usuário
-  function pegarTodasPartidasDoUsuario() {
-    fetch(`/aquarios/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (partidas) {
-            let dados = JSON.stringify(partidas);
-
-            for (let i = 0; i < partidas.length; i++) {
-              const partida = partidas[i];
-            }
-          });
-        } else {
-          console.error("Nenhum dado encontrado ou erro na API");
-        }
-      })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-  }
-
-  // Pegar as cinco últimas partidas do usuário
-  function pegarAsUltimasCincoPartidasDoUsuario(params) {    
-    fetch(`/aquarios/ultimas-partidas/${sessionStorage.ID_USUARIO}`, {
-      cache: "no-store",
-    })
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (partidas) {
-            let dados = JSON.stringify(partidas);
+    });
   
-            for (let i = partidas.length - 1; i >= 0; i--) {
-              const partida = partidas[i];
-              console.log(partida);
-              listaDeMovimentos.push(partida.movimentos);
-              listaDeDatasDasPartidas.push(partida.idPartida);
-              atualizaGrafico();
-            }
-          });
-        } else {
-          console.error("Nenhum dado encontrado ou erro na API");
-        }
-      })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-  }
+    function atualizaGrafico() {
+      grafico.update();
+    }
+  
+    function pegarTodasPartidasDoUsuario() {
+      return fetch(`/aquarios/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+        .then(function (response) {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.error("Nenhum dado encontrado ou erro na API");
+            return Promise.reject("Erro na API");
+          }
+        })
+        .catch(function (error) {
+          console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+  
+    function pegarAsUltimasCincoPartidasDoUsuario() {
+      return fetch(`/aquarios/ultimas-partidas/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+        .then(function (response) {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.error("Nenhum dado encontrado ou erro na API");
+            return Promise.reject("Erro na API");
+          }
+        })
+        .then(function (partidas) {
+          for (let i = partidas.length - 1; i >= 0; i--) {
+            const partida = partidas[i];
+            listaDeMovimentos.push(partida.movimentos);
+            listaDeDatasDasPartidas.push(partida.idPartida);
+            atualizaGrafico();
+          }
+        })
+        .catch(function (error) {
+          console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+    
+    function pegarUltimaPartidaDoUsuario() {
+      return fetch(`/aquarios/partida-tempo-real/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+        .then(function (response) {
+          if (response.ok) {
+            return response.json(); 
+          } else {
+            console.error("Nenhum dado encontrado ou erro na API");
+            return Promise.reject("Erro na API");
+          }
+        })
+        .then(function (novaPartida) {
+          if (novaPartida[0].idPartida !== dados.labels[dados.labels.length - 1]) {
+            dados.labels.shift();
+            dados.labels.push(novaPartida[0].idPartida);
 
-  // Pegar a última partida do usuário
-  function pegarUltimaPartidaDoUsuario(params) {
-    fetch(`/aquarios/partida-tempo-real/${sessionStorage.ID_USUARIO}`, {
-      cache: "no-store",
-    })
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (partidas) {
-            let dados = JSON.stringify(partidas);
-
-            for (let i = 0; i < partidas.length; i++) {
-              const partida = partidas[i];
-            }
-          });
-        } else {
-          console.error("Nenhum dado encontrado ou erro na API");
-        }
-      })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-  }
+            dados.datasets[0].data.shift();
+            atualizaGrafico();
+            dados.datasets[0].data.push(novaPartida[0].movimentos);
+          }
+          console.log(dados.datasets[0].data);
+          // console.log(novaPartida);
+        })
+        .catch(function (error) {
+          console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+  
+    function inicializar() {
+      pegarAsUltimasCincoPartidasDoUsuario()
+        .then(
+          setInterval(function() {
+            pegarUltimaPartidaDoUsuario()
+          }, 2000)
+        )
+        .catch(function (error) {
+          console.error(`Erro na inicialização: ${error.message}`);
+        });
+    }
+  </script>
+  
 </script>

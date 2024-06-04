@@ -8,6 +8,7 @@ function validarSessao() {
     if (email != null && nome != null) {
         b_usuario.innerHTML = nome;
     } else {
+        alert('Realize o login para jogar');
         window.location = "../login.html";
     }
 }
