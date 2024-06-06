@@ -24,9 +24,6 @@ html {
 }
 
 body {
-}
-
-body {
   overflow: overlay;
   
   background-color: var(--light);
@@ -613,7 +610,7 @@ main .form .form-field input:focus {
 /* AGENT */
 #agent {
   background-color: var(--dark-gray);
-  padding-inline: 4.4rem;
+  padding: 0 4.4rem 4.4rem 4.4rem;
   position: absolute;
   width: 100%;
   height: 100vh;
@@ -633,16 +630,55 @@ main .form .form-field input:focus {
   justify-content: space-between;
 }
 
-#agent main .left .skills {
+#agent main .left .abilities {
   padding-top: calc(10.4rem + 4.4rem);
   display: flex;
   flex-direction: column;
   gap: 4.4rem;
 }
 
-#agent main .left .skills img {
+#agent main .left .abilities img {
   width: 4rem;
   height: 4rem;
+  cursor: pointer;
+}
+
+#agent main .left .tooltip {
+  position: absolute;
+  padding: 2rem;
+  background-color: var(--light);
+  color: var(--typography-dark);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s;
+  z-index: 1000;
+  width: 64rem;
+}
+
+#agent main .left .tooltip::before {
+  content: "";
+  position: absolute;
+  top: .6rem;
+  left: -3.4rem;
+  border-width: 1.8rem;
+  border-style: solid;
+  border-color: transparent var(--light) transparent transparent;
+}
+
+#agent main .left .tooltip.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+#agent main .left .tooltip .tooltip-title {
+  color: var(--dark-gray);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dark-gray);
+  margin-bottom: 1rem;
+}
+
+#agent main .left .tooltip .tooltip-description {
+  line-height: 2.7rem;
 }
 
 #agent main .left .main-title {
@@ -650,17 +686,20 @@ main .form .form-field input:focus {
 }
 
 #agent main .center {
-  width: 48rem;
-  margin-top: 22rem;
+  width: 60rem;
+  margin-top: 10rem;
+  margin-left: -2rem;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: hidden;
+  height: 110vh;
 }
 
 #agent main .center #agent_image {
   position: absolute;
-  width: 180%;
+  width: 150%;
   object-fit: cover;
   z-index: 97;
 }
@@ -675,18 +714,45 @@ main .form .form-field input:focus {
   overflow: hidden;
   outline: 2px dashed var(--light);
   outline-offset: 2rem;
+  transition: all .5s;
+  user-select: none;
 }
 
 #agent main .center .agent-background-image {
   position: absolute;
   width: 200%;
   right: -10rem;
+  transition: all .5s;
 }
 
 #agent main .right {
-  margin-top: calc(10.4rem + 4.4rem);
+  margin-top: calc(10.4rem + 1rem);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 #agent main .right .subtitle {
   color: var(--light);
+}
+
+#agent main .right h2.main-title {
+  color: var(--light);
+  font-size: 3.2rem;
+  line-height: 3.2rem;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+#agent main .right .paragraph {
+  color: var(--typography-dark);
+  line-height: 2.7rem;
+  margin-top: 1.2rem;
+  width: 40rem;
+}
+
+#agent main .right .description {
+  margin-top: 6.4rem;
 }

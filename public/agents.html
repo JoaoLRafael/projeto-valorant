@@ -60,7 +60,7 @@ async function fetchAgents() {
 
             if (agent.role.displayName == role) {
               result.innerHTML += `
-                <div class="card">
+                <a href="./agents/agent_${agent.displayName.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')}.html" class="card">
                   <img class="agent-image" src="${agent.fullPortrait}">
 
                   <div class="agent-info">
@@ -70,7 +70,7 @@ async function fetchAgents() {
                       <img src="${agent.role.displayIcon}">
                     </div>
                   </div>
-                </div>
+                </a>
               `;
             }
           }

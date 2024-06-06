@@ -77,27 +77,27 @@
       const agents = data.data;
       const roles = ["Iniciador", "Sentinela", "Controlador", "Duelista"];
 
-      ability1.setAttribute("src", data.data[3].abilities[0].displayIcon);
-      ability1.setAttribute("data-title", data.data[3].abilities[0].displayName);
-      ability1.setAttribute("data-description", data.data[3].abilities[0].description);
+      ability1.setAttribute("src", data.data[22].abilities[0].displayIcon);
+      ability1.setAttribute("data-title", data.data[22].abilities[0].displayName);
+      ability1.setAttribute("data-description", data.data[22].abilities[0].description);
 
-      ability2.setAttribute("src", data.data[3].abilities[1].displayIcon);
-      ability2.setAttribute("data-title", data.data[3].abilities[1].displayName);
-      ability2.setAttribute("data-description", data.data[3].abilities[1].description);
+      ability2.setAttribute("src", data.data[22].abilities[1].displayIcon);
+      ability2.setAttribute("data-title", data.data[22].abilities[1].displayName);
+      ability2.setAttribute("data-description", data.data[22].abilities[1].description);
 
-      ability3.setAttribute("src", data.data[3].abilities[2].displayIcon);
-      ability3.setAttribute("data-title", data.data[3].abilities[2].displayName);
-      ability3.setAttribute("data-description", data.data[3].abilities[2].description);
+      ability3.setAttribute("src", data.data[22].abilities[2].displayIcon);
+      ability3.setAttribute("data-title", data.data[22].abilities[2].displayName);
+      ability3.setAttribute("data-description", data.data[22].abilities[2].description);
 
-      ability4.setAttribute("src", data.data[3].abilities[3].displayIcon);
-      ability4.setAttribute("data-title", data.data[3].abilities[3].displayName);
-      ability4.setAttribute("data-description", data.data[3].abilities[3].description);
+      ability4.setAttribute("src", data.data[22].abilities[3].displayIcon);
+      ability4.setAttribute("data-title", data.data[22].abilities[3].displayName);
+      ability4.setAttribute("data-description", data.data[22].abilities[3].description);
 
-      agent_name.innerHTML = data.data[3].displayName;
-      agent_image.setAttribute("src", data.data[3].fullPortrait);
-      agent_role.innerHTML = data.data[3].role.displayName;
-      role_description.innerHTML = data.data[3].role.description;
-      agent_description.innerHTML = data.data[3].description;
+      agent_name.innerHTML = data.data[22].displayName;
+      agent_image.setAttribute("src", data.data[22].fullPortrait);
+      agent_role.innerHTML = data.data[22].role.displayName;
+      role_description.innerHTML = data.data[22].role.description;
+      agent_description.innerHTML = data.data[22].description;
 
       initializeTooltips();
       showInitialTooltip();
