@@ -118,6 +118,7 @@ header {
   justify-content: space-between;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 99;
 }
 
@@ -284,6 +285,83 @@ header .btn-primary {
   width: 54rem;
 }
 
+#home #agents-section {
+  height: 66.4rem;
+  display: flex;
+}
+
+#home #agents-section .content {
+  width: 50%;
+  height: 100%;
+  background-image: url(../images/agents-left-background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 4.4rem;
+}
+
+#home #agents-section .content .main-title {
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+#home #agents-section .content .paragraph {
+  margin-top: 3.2rem;
+  width: 58rem;
+  line-height: 2.7rem;
+}
+
+#home #agents-section .content .btn-primary {
+  margin-top: 3.2rem;
+  width: 36rem;
+}
+
+#home #agents-section .example {
+  width: 50%;
+  background-image: url(../images/agents-right-background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-left: 4.8rem;
+  border-left: 10px solid var(--main-color);
+}
+
+#home #agents-section .example img {
+  width: 4rem;
+  height: 4rem;
+}
+
+#home #agents-section .example .title {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+}
+
+#home #agents-section .example .title .main-title {
+  font-size: 4.8rem;
+  line-height: 4.8rem;
+  color: var(--light);
+  text-transform: uppercase;
+}
+
+#home #agents-section .example .paragraph {
+  color: var(--typography-dark);
+  margin-top: 2rem;
+  width: 56.4rem;
+  line-height: 2.7rem;
+  font-weight: 400;
+}
+
+#home #agents-section .example .row-skills {
+  display: flex;
+  gap: 6.4rem;
+  margin-block: 2rem 3.2rem;
+}
+
 /* LOGIN */
 #login {
   background-image: url(../images/login-background.png);
@@ -324,17 +402,17 @@ header .btn-primary {
   gap: 3.2rem;
 }
 
-#login main .form .form-field {
+main .form .form-field {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-#login main .form .form-field label {
+main .form .form-field label {
   color: var(--light);
 }
 
-#login main .form .form-field input {
+main .form .form-field input {
   color: var(--light);
   background-color: #585e6575;
   border: none;
@@ -343,12 +421,71 @@ header .btn-primary {
   padding-left: 1.2rem;
 }
 
-#login main .form .form-field input:focus {
+main .form .form-field input:focus {
   outline: none;
   background-color: #585e65B3;
 }
 
 /* CADASTRO */
+#register {
+  background-image: url(../images/register-background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#register main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#register .main-title {
+  color: var(--light);
+  font-size: 8rem;
+  line-height: 8rem;
+}
+
+#register .subtitle {
+  color: var(--light);
+  margin-top: 2rem;
+}
+
+#error_message {
+  color: var(--light);
+  background-color: var(--main-color);
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+#login #error_message {
+  width: 33.2rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+#error_message.disabled {
+  display: none;
+}
+
+#register main .form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.2rem;
+  width: 70.6rem;
+  margin-top: 4.4rem;
+  justify-content: center;
+}
+
+#register main .form input,
+#register main .form button {
+  width: 33rem;
+}
 
 /* AGENTES */
 #agents {
@@ -471,4 +608,85 @@ header .btn-primary {
 #agents main #role .card .agent-info .agent-role img {
   width: 2rem;
   height: 2rem;
+}
+
+/* AGENT */
+#agent {
+  background-color: var(--dark-gray);
+  padding-inline: 4.4rem;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#agent main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+#agent main .left {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-bottom: 4.4rem;
+  justify-content: space-between;
+}
+
+#agent main .left .skills {
+  padding-top: calc(10.4rem + 4.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 4.4rem;
+}
+
+#agent main .left .skills img {
+  width: 4rem;
+  height: 4rem;
+}
+
+#agent main .left .main-title {
+  color: var(--light);
+}
+
+#agent main .center {
+  width: 48rem;
+  margin-top: 22rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#agent main .center #agent_image {
+  position: absolute;
+  width: 180%;
+  object-fit: cover;
+  z-index: 97;
+}
+
+#agent main .center .agent-background {
+  position: relative;
+  margin-top: -2rem;
+  background: none;
+  border-radius: 50%;
+  width: 36rem;
+  height: 36rem;
+  overflow: hidden;
+  outline: 2px dashed var(--light);
+  outline-offset: 2rem;
+}
+
+#agent main .center .agent-background-image {
+  position: absolute;
+  width: 200%;
+  right: -10rem;
+}
+
+#agent main .right {
+  margin-top: calc(10.4rem + 4.4rem);
+}
+
+#agent main .right .subtitle {
+  color: var(--light);
 }

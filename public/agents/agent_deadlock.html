@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <title>Document</title>
+</head>
+
+<body id="agent">
+  <header>
+    <img class="header-logo" src="../assets/images/valorant-logo-red.svg" />
+    <nav>
+      <ul class="navbar">
+        <li class="menu-item"><a href="/index.html">home</a></li>
+        <li class="menu-item">
+          <a href="/index.html#about-valorant">sobre o valorant</a>
+        </li>
+        <li class="menu-item">
+          <a href="/index.html#equality">igualdade</a>
+        </li>
+        <li class="menu-item">
+          <a href="/index.html#agents-section">agentes</a>
+        </li>
+      </ul>
+    </nav>
+    <a class="btn-primary" href="/login.html">login</a>
+  </header>
+
+  <main>
+    <div class="left">
+      <div class="skills">
+        <img src="../assets/images/deadlock-skill1.png">
+        <img src="../assets/images/deadlock-skill2.png">
+        <img src="../assets/images/deadlock-skill3.png">
+        <img src="../assets/images/deadlock-skill4.png">
+      </div>
+      <h1 class="main-title" id="agent_name"></h1>
+    </div>
+
+    <div class="center">
+      <img id="agent_image">
+      <div class="agent-background">
+        <img src="../assets/images/agent-background.png" class="agent-background-image">
+      </div>
+    </div>
+
+    <div class="right">
+      <h3 class="subtitle">// função</h3>
+    </div>
+  </main>
+</body>
+
+<script>
+  const apiURL = "https://valorant-api.com/v1/agents?language=pt-BR";
+
+  async function fetchAgents() {
+    try {
+      const response = await fetch(apiURL);
+
+      if (!response.ok) {
+        throw new Error(`Erro: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const agents = data.data;
+      const roles = ["Iniciador", "Sentinela", "Controlador", "Duelista"];
+      console.log(data.data[3]);
+      agent_name.innerHTML = data.data[3].displayName;
+      agent_image.setAttribute('src', data.data[3].fullPortrait);
+    } catch (error) {
+      console.error("Erro ao buscar os agentes:", error);
+    }
+  }
+
+  fetchAgents();
+</script>
+
+</html>

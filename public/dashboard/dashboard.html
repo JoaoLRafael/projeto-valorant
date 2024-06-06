@@ -148,8 +148,8 @@
             dados.labels.push(novaPartida[0].idPartida);
 
             dados.datasets[0].data.shift();
-            atualizaGrafico();
             dados.datasets[0].data.push(novaPartida[0].movimentos);
+            atualizaGrafico();
           }
           console.log(dados.datasets[0].data);
           // console.log(novaPartida);

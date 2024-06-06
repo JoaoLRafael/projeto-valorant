@@ -25,6 +25,8 @@
     <h1 class="main-title">Login</h1>
     <h3 class="subtitle">bem-vindo novamente</h3>
 
+    <span id="error_message" class="disabled"></span>
+
     <div class="create-account">
       <p>Não tem uma conta? <a href="./cadastro.html" class="red-link">Criar conta</a></p>
       <p>Leva apenas alguns minutos!</p>
@@ -41,7 +43,7 @@
         <input type="password" name="password" id="input_password" placeholder="Digite a sua senha">
         <a href="#" class="red-link">Esqueceu a senha</a>
       </div>
-      <button class="btn-primary" onclick="entrar()">Entrar</button>
+      <button class="btn-primary" onclick="validacao()">Entrar</button>
     </div>
   </main>
   <div id="div_erros_login"></div>
@@ -50,24 +52,29 @@
 </html>
 
 <script>
+  function validacao () {
+    const email = document.getElementById('input_email').value;
+    const password= document.getElementById('input_password').value;
+    const errorSpan = document.getElementById('error_message');
+    
+    if (password == "" || email == "") {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'Preencha todos os campos';
+    } else {
+      errorSpan.classList.add('disabled');
+      entrar();
+    }
+  }
+  
   function entrar() {
     // aguardar();
     var emailVar = input_email.value;
     var senhaVar = input_password.value;
-
-    if (emailVar == "" || senhaVar == "") {
-      cardErro.style.display = "block"
-      mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-      finalizarAguardar();
-      return false;
-    }
-    else {
-      setInterval(sumirMensagem, 5000)
-    }
-
+    const errorSpan = document.getElementById('error_message');
+    
     console.log("FORM LOGIN: ", emailVar);
     console.log("FORM SENHA: ", senhaVar);
-
+    
     fetch("/usuarios/autenticar", {
       method: "POST",
       headers: {
@@ -89,14 +96,20 @@
           sessionStorage.EMAIL_USUARIO = json.email;
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.id;
-          sessionStorage.PARTIDAS = JSON.stringify(json.partidas)
-
         });
-        // setTimeout(function () {
+
+        error_message.classList.remove('disabled');
+        error_message.style.backgroundColor = 'green'
+
+        error_message.innerHTML = "Login realizado com sucesso!";
+
+        setTimeout(function () {
           window.location = "./dashboard/cards.html";
-        // }, 1000); // apenas para exibir o loading
+        }, 1000); // apenas para exibir o loading
 
       } else {
+        errorSpan.classList.remove('disabled');
+        errorSpan.innerHTML = 'Email ou senha inválido';
         console.log("Houve um erro ao tentar realizar o login!");
         resposta.text().then(texto => {
           console.error(texto);

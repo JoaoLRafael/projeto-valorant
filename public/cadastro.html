@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 
   <script src="./js/sessao.js"></script>
 
@@ -21,10 +21,10 @@
   </div>
   
   <main>
-    <h1>Cadastro</h1>
-    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing</h3>
-
-    <form action="#">
+    <h1 class="main-title">Cadastro</h1>
+    <h3 class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing</h3>
+    <div class="form">
+      <span id="error_message" class="disabled"></span>
       <div class="form-field">
         <label for="username">Nome de usuário</label>
         <input type="text" name="username" id="input_username" placeholder="Digite o seu nome de usuário">
@@ -41,43 +41,50 @@
       </div>
 
       <div class="form-field">
-        <label for="confirmPassword">Senha</label>
+        <label for="confirmPassword">Confirmar senha</label>
         <input type="password" name="confirmPassword" id="input_confirm_password" placeholder="Confirme sua senha">
       </div>
-      <button class="btn-primary" onclick="cadastrar()">Cadastrar</button>
-    </form>
+      <button class="btn-primary" onclick="validacao()">Cadastrar</button>
+    </div>
   </main>
 </body>
 </html>
 
 <script>
-  function cadastrar() {
-    // aguardar();
+  function validacao () {
+    const username = document.getElementById('input_username').value;
+    const email = document.getElementById('input_email').value;
+    const password= document.getElementById('input_password').value;
+    const confirmPassword= document.getElementById('input_confirm_password').value;
+    const errorSpan = document.getElementById('error_message');
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
+    if (username == "" || password == "" || confirmPassword == "" || confirmPassword == "") {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'Preencha todos os campos';
+    } else if (username.length < 2) {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'O nome de usuário deve ter pelo menos 3 caracteres';
+    } else if (email.indexOf('@') < 0) {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'Email inválido';
+    } else if (password.length < 5) {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'A senha conter pelo menos 6 caracteres';
+    } else if (password !== confirmPassword) {
+      errorSpan.classList.remove('disabled');
+      errorSpan.innerHTML = 'A confirmação da senha deve ser igual ao campo senha';
+    } else {
+      errorSpan.classList.add('disabled');
+      cadastrar();
+    }
+  }
+
+  function cadastrar() {
     var userVar = input_username.value;
     var emailVar = input_email.value;
     var senhaVar = input_password.value;
     var confirmacaoSenhaVar = input_confirm_password.value;
     console.log(userVar, emailVar, senhaVar, confirmacaoSenhaVar);
-    // var empresaVar = listaEmpresas.value
-    if (
-      userVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == ""
-      // empresaVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -99,9 +106,10 @@
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          cardErro.style.display = "block";
+          error_message.classList.remove('disabled');
+          error_message.style.backgroundColor = 'green'
 
-          mensagem_erro.innerHTML =
+          error_message.innerHTML =
             "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
           setTimeout(() => {
