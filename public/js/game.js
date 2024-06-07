@@ -29,6 +29,7 @@ startGame();
 function startGame() {
   cards = createCardsFromAgents(AGENTS);
   qtdMovimento = 0;
+  usuario.innerHTML = `Jogador: ${sessionStorage.NOME_USUARIO}`;
   shuffleCards(cards);
 
   initializeCards(cards);
@@ -119,7 +120,6 @@ function flipCard() {
     this.classList.add('flip');
 
     if (secondCard) {
-      console.log(tempoConclusao);
       if (checkMatch()) {
         clearCards();
         if(checkGameOver()) {
@@ -165,11 +165,12 @@ function setCard(id) {
 function checkMatch() {
   if (!firstCard || !secondCard) {
     qtdMovimento++;
+    movimentos.innerHTML = `Movimentos: ${qtdMovimento + 1}`;
     return false;
-  }
-
+    }
+    
+  movimentos.innerHTML = `Movimentos: ${qtdMovimento + 1}`;
   qtdMovimento++;
-  console.log(qtdMovimento);
   return firstCard.icon === secondCard.icon;
 }
 
@@ -192,6 +193,7 @@ function checkGameOver() {
 function restartGame() {
   clearCards();
   startGame();
+  resetarCronometro();
   let gameOverLayer = document.getElementById('game_over');
   gameOverLayer.style.display = 'none';
 }
@@ -243,10 +245,16 @@ function formatarTempo(tempo) {
 function iniciarCronometro() {
   cronometro = setInterval(() => {
       tempo++;
-      document.getElementById('cronometro').innerText = formatarTempo(tempo);
+      document.getElementById('cronometro').innerText = `Tempo: ${formatarTempo(tempo)}`;
   }, 1000);
 }
 
 function pausarCronometro() {
   clearInterval(cronometro);
+}
+
+function resetarCronometro() {
+  clearInterval(cronometro);
+  tempo = 0;
+  document.getElementById('cronometro').innerText = `Tempo: ${formatarTempo(tempo)}`;
 }

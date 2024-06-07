@@ -8,14 +8,21 @@
   <title>Jogo da Memória</title>
 </head>
 <body id="memory_game" onload="validarSessao(), aguardar()">
-  <div id="cronometro">00:00</div>
-  <div id="game_board">
+  <div class="info">
+    <div id="usuario"></div>
+    <div id="movimentos">Movimentos: 0</div>
+    <div id="cronometro">Tempo: 00:00</div>
   </div>
+  
+  <div id="game_board"></div>
+
+  <a href="/index.html" class="red-link return">Voltar para página inicial</a>
 
   <div id="game_over">
     <h1 class="main_title">Parabéns, você completou o jogo!</h1>
     <h2 class="subtitle" id="match_time"></h2>
     <a id="restart" onclick="restartGame()" class="btn-primary">Jogar novamente</a>
+    <a href="./dashboard.html" class="btn-primary">Ver resultados</a>
   </div>
 
   <script src="./js/game.js"></script>

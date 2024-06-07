@@ -78,6 +78,10 @@ a.red-link {
   transition: all 0.1s ease-in-out;
 }
 
+.red-link.return {
+  margin-top: 1rem;
+}
+
 a.red-link:hover {
   opacity: 1;
 }
@@ -139,6 +143,22 @@ header .btn-primary {
   margin-top: 2.4rem;
   height: 4rem;
   padding: 0 2rem;
+}
+
+header #button_header {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  gap: .4rem;
+  flex-direction: column;
+}
+
+header #button_header span {
+  margin-top: -1rem;
+}
+
+header #button_header button {
+  margin-top: -2rem;
 }
 
 /* HOME */
@@ -453,12 +473,23 @@ main .form .form-field input:focus {
   margin-top: 2rem;
 }
 
+#register .red-link {
+  color: var(--light);
+  width: 100%;
+  text-align: center;
+  margin-top: -2rem;
+}
+
 #error_message {
   color: var(--light);
   background-color: var(--main-color);
   padding: 1rem;
   margin-top: 2rem;
   text-align: center;
+}
+
+#register #error_message {
+  width: 100%;
 }
 
 #login #error_message {
@@ -488,6 +519,7 @@ main .form .form-field input:focus {
 /* AGENTES */
 #agents {
   padding-top: calc(10.4rem + 4.4rem);
+  margin-bottom: 3.2rem;
 }
 
 #agents main h1.main-title {
@@ -762,6 +794,7 @@ main .form .form-field input:focus {
   background-color: var(--dark-gray);
   margin-top: calc(10.4rem + 3.2rem);
   overflow-x: hidden;
+  margin-bottom: 3.2rem;
 }
 
 #dashboard main {
@@ -836,7 +869,7 @@ main .form .form-field input:focus {
 }
 
 #dashboard main .ranking-best-players table {
-  width: 100%;
+  width: 53.6rem;
   border-collapse: collapse;
 }
 
@@ -857,6 +890,19 @@ body#memory_game {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
+}
+
+#memory_game .info {
+  display: flex;
+  margin-bottom: 3.2rem;
+  width: 100%;
+  justify-content: space-evenly;
+  width: 70rem;
+}
+
+#memory_game .red-link {
+  margin-top: 2rem;
 }
 
 #memory_game .card {
