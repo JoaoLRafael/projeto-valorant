@@ -756,3 +756,96 @@ main .form .form-field input:focus {
 #agent main .right .description {
   margin-top: 6.4rem;
 }
+
+#dashboard {
+  background-color: var(--dark-gray);
+  margin-top: calc(10.4rem + 3.2rem);
+  overflow-x: hidden;
+}
+
+#dashboard main {
+  margin-inline: 4.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4.4rem;
+}
+
+#dashboard .introduction {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#dashboard .introduction .main-title {
+  font-size: 8rem;
+  line-height: 8rem;
+}
+
+#dashboard .main-title,
+#dashboard .subtitle {
+  color: var(--light);
+}
+
+#dashboard main .metrics {
+  display: flex;
+  justify-content: space-between;
+  border-block: 1px solid var(--light);
+  padding: 2rem 0;
+}
+
+#dashboard main .metrics .metric-card {
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#dashboard main .metrics .metric-card .main-title {
+  color: var(--main-color);
+}
+
+#dashboard main .metrics .metric-card .metric-description {
+  text-align: center;
+}
+
+#dashboard main .chart {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+#dashboard main .small-title {
+  font-size: 3.2rem;
+  line-height: 3.2rem;
+}
+#dashboard main .ranking-best-players .main-title {
+  margin-bottom: 2rem;
+}
+
+#dashboard main .ranking-best-players .tables {
+  display: flex;
+  justify-content: space-between;
+}
+
+#dashboard main .ranking-best-players .subtitle {
+  margin-bottom: 2rem;
+}
+
+#dashboard main .ranking-best-players table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#dashboard main .ranking-best-players table td,
+#dashboard main .ranking-best-players table th {
+  border: 1px solid var(--typography-dark);
+  text-align: center;
+  padding: 1rem 2rem;
+}
+
+#dashboard main .ranking-best-players table th {
+  color: var(--light);
+}

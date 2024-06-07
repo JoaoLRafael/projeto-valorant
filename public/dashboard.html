@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <script src="./js/sessao.js"></script>
+  <script src="./js/alerta.js"></script>
+
+  <!-- scripts do Chart.js - 2022-1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body onload="inicializar()" id="dashboard">
+  <header>
+    <img class="header-logo" src="./assets/images/valorant-logo-red.svg">
+    <nav>
+      <ul class="navbar">
+        <li class="menu-item"><a href="/index.html">home</a></li>
+        <li class="menu-item"><a href="/index.html#about-valorant">sobre o valorant</a></li>
+        <li class="menu-item"><a href="/index.html#equality">igualdade</a></li>
+        <li class="menu-item"><a href="/index.html#agents-section">agentes</a></li>
+      </ul>
+    </nav>
+    <a class="btn-primary" href="/login.html">login</a>
+  </header>
+
+  <main>
+    <div class="introduction">
+      <h1 class="main-title">Dashboard</h1>
+      <h3 class="subtitle">olá <span class="subtitle" id="username"></span>, aqui está seu desempenho no jogo da memória
+      </h3>
+    </div>
+
+    <div class="metrics">
+      <div class="metric-card">
+        <h1 class="main-title" id="smallest_movements"></h1>
+        <span class="metric-description">Menor quantidade de movimentos</span>
+      </div>
+
+      <img src="./assets/images/divisor-metrics.svg">
+
+      <div class="metric-card">
+        <h1 class="main-title" id="largest_movements"></h1>
+        <span class="metric-description">Maior quantidade de movimentos</span>
+      </div>
+
+      <img src="./assets/images/divisor-metrics.svg">
+
+      <div class="metric-card">
+        <h1 class="main-title" id="avg_movements"></h1>
+        <span class="metric-description">Média de movimentos (todos as partidas)</span>
+      </div>
+
+      <img src="./assets/images/divisor-metrics.svg">
+
+      <div class="metric-card">
+        <h1 class="main-title" id="best_time">05:24</h1>
+        <span class="metric-description">Recorde de tempo</span>
+      </div>
+    </div>
+
+    <div class="chart">
+      <h3 class="main-title small-title">Últimas dez partidas</h3>
+      <h3 class="subtitle">quantidade de movimentos por partida</h3>
+      <canvas id="myChart" width="1000" height="300"></canvas>
+    </div>
+
+    <div class="ranking-best-players">
+      <h3 class="main-title small-title">Ranking de melhores jogadores</h3>
+      <div class="tables">
+        <div class="ranking-movement">
+          <h3 class="subtitle">menor quantidade de movimentos</h3>
+          <table id="table_movement">
+            <tr>
+              <th><b>Nº</b></th>
+              <th><b>JOGADOR</b></th>
+              <th><b>MOVIMENTOS</b></th>
+            </tr>
+          </table>
+        </div>
+        <div class="ranking-time">
+          <h3 class="subtitle">menor quantidade de tempo</h3>
+          <table id="table_time">
+            <tr>
+              <th><b>Nº</b></th>
+              <th><b>JOGADOR</b></th>
+              <th><b>TEMPO</b></th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
+<script>
+  const listaDosDezUltimosMovimentos = [];
+  const listaDeDatasDasPartidas = [];
+  username.innerHTML = sessionStorage.NOME_USUARIO;
+  let dados = {
+    labels: listaDeDatasDasPartidas,
+    datasets: [{
+      label: 'Movimentos',
+      data: listaDosDezUltimosMovimentos,
+      backgroundColor: '#F6F6F6',
+    }]
+  }
+
+  const ctx = document.getElementById('myChart');
+  const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: dados,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: '#716C6C',
+          }
+        },
+        x: {
+          grid: {
+            color: '#716C6C',
+          }
+        },
+      },
+    }
+  });
+
+  function atualizaGrafico() {
+    grafico.update();
+  }
+
+  function pegarPartidasDoUsuario() {
+    return fetch(`/aquarios/todas-partidas/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        const partidaComMenorQtdMovimentos = partidas.reduce((min, obj) => (obj.qtdMovimento < min.qtdMovimento ? obj : min), partidas[0]);
+        const partidaComMaiorQtdMovimentos = partidas.reduce((max, obj) => (obj.qtdMovimento > max.qtdMovimento ? obj : max), partidas[0]);
+        const somaDeTodosMovimentos = partidas.reduce((total, obj) => total + obj.qtdMovimento, 0);
+        const mediaDeTodosMovimentos = Math.round(somaDeTodosMovimentos / partidas.length);
+
+        smallest_movements.innerHTML = partidaComMenorQtdMovimentos.qtdMovimento;
+        largest_movements.innerHTML = partidaComMaiorQtdMovimentos.qtdMovimento;
+        avg_movements.innerHTML = mediaDeTodosMovimentos;
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  pegarPartidasDoUsuario()
+
+  function pegarPartidasDoUsuarioOrdenadasPorMovimento() {
+    return fetch(`/aquarios/partida-ordenada-movimento/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        console.log(partidas);
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  pegarPartidasDoUsuarioOrdenadasPorMovimento();
+
+  function pegarPartidasDoUsuarioOrdenadasPorTempo() {
+    return fetch(`/aquarios/partida-ordenada-tempo/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        console.log(partidas);
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  pegarPartidasDoUsuarioOrdenadasPorTempo();
+
+  function pegarAsUltimasDezPartidasDoUsuario() {
+    return fetch(`/aquarios/ultimas-partidas/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        console.log(partidas);
+        for (let i = partidas.length - 1; i >= 0; i--) {
+          const partida = partidas[i];
+          listaDosDezUltimosMovimentos.push(partida.movimentos);
+          listaDeDatasDasPartidas.push(partida.dataPartida);
+          atualizaGrafico();
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  function pegarTopCincoMovimento() {
+    fetch(`/aquarios/top-cinco-movimento`)
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        for (let i = 0; i < partidas.length; i++) {
+          const partida = partidas[i];
+          table_movement.innerHTML += `
+          <tr>
+            <th>${i +1}º</th>
+            <td>${partida.username}</td>  
+            <td>${partida.movimentos}</td>  
+          </tr>
+          `;
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  pegarTopCincoMovimento();
+
+  function pegarTopCincoTempo() {
+    fetch(`/aquarios/top-cinco-tempo`)
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (partidas) {
+        for (let i = 0; i < partidas.length; i++) {
+          const partida = partidas[i];
+          table_time.innerHTML += `
+          <tr>
+            <th>${i +1}º</th>
+            <td>${partida.username}</td>  
+            <td>${partida.tempoConclusao}</td>  
+          </tr>
+          `;
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  pegarTopCincoTempo();
+
+  function pegarUltimaPartidaDoUsuario() {
+    return fetch(`/aquarios/partida-tempo-real/${sessionStorage.ID_USUARIO}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          return Promise.reject("Erro na API");
+        }
+      })
+      .then(function (novaPartida) {
+        if (novaPartida[0].dataPartida !== dados.labels[dados.labels.length - 1]) {
+          dados.labels.shift();
+          dados.labels.push(novaPartida[0].dataPartida);
+
+          dados.datasets[0].data.shift();
+          dados.datasets[0].data.push(novaPartida[0].movimentos);
+          atualizaGrafico();
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+ 
+  function inicializar() {
+    pegarAsUltimasDezPartidasDoUsuario()
+      .then(
+        setInterval(function () {
+          pegarUltimaPartidaDoUsuario()
+        }, 2000)
+      )
+      .catch(function (error) {
+        console.error(`Erro na inicialização: ${error.message}`);
+      });
+  }
+</script>
+
+</script>
