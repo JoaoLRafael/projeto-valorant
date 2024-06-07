@@ -239,6 +239,7 @@ header .btn-primary {
 #home #equality .image-description {
   position: relative;
   padding-left: 12.2rem;
+  margin-top: -8rem;
   color: var(--dark-gray);
   line-height: 2.7rem;
   width: 54rem;
@@ -848,4 +849,78 @@ main .form .form-field input:focus {
 
 #dashboard main .ranking-best-players table th {
   color: var(--light);
+}
+
+/* JOGO DA MEMÓRIA */
+body#memory_game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#memory_game .card {
+  width: 10rem;
+  height: 10rem;
+  position: relative;
+  transform-style: preserve-3d; /* Faz com que o elemento seja 3D */
+  transition: transform .5s ease-in-out;
+}
+
+#memory_game .card_front,
+#memory_game .card_back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  backface-visibility: hidden; /* Todas os elementos invertido ficam invisíveis*/
+}
+
+#memory_game .flip {
+  transform: rotateY(180deg);
+}
+
+#memory_game .card_front {
+  background-color: var(--dark-gray);
+  transform: rotateY(180deg);
+}
+
+#memory_game .card_back {
+  background-color: var(--main-color);
+}
+
+#memory_game .card img {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+#game_over {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6.4rem;
+}
+
+#game_over .main_title {
+  color: var(--light);
+}
+
+#game_over .subtitle {
+  color: var(--light);
+}
+
+#game_board {
+  max-width: 70rem;
+  display: grid;
+  grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr;
+  gap: 2rem;
 }

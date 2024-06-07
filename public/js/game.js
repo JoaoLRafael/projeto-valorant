@@ -1,7 +1,7 @@
 const FRONT = "card_front";
 const BACK = "card_back";
 let qtdMovimento = 0;
-let tempoConclusao = '00:05:32';
+let tempoConclusao = '';
 
 const AGENTS = [
   "astra",
@@ -21,6 +21,9 @@ let lockMode = false;
 let firstCard = null;
 let = secondCard = null;
 
+let tempo = 0;
+let cronometro;
+
 startGame();
 
 function startGame() {
@@ -29,6 +32,8 @@ function startGame() {
   shuffleCards(cards);
 
   initializeCards(cards);
+
+  iniciarCronometro()
 }
 
 function initializeCards(cards) {
@@ -114,11 +119,14 @@ function flipCard() {
     this.classList.add('flip');
 
     if (secondCard) {
+      console.log(tempoConclusao);
       if (checkMatch()) {
         clearCards();
         if(checkGameOver()) {
           let gameOverLayer = document.getElementById('game_over');
           gameOverLayer.style.display = 'flex';
+          pausarCronometro();
+          match_time.innerHTML = `Tempo: ${tempoConclusao}`;
           publicar();
         }
       } else {
@@ -218,5 +226,27 @@ function publicar() {
   });
 
   return false;
+}
 
+function formatarTempo(tempo) {
+  let horas = Math.floor(tempo / 3600);
+  let minutos = Math.floor((tempo % 3600) / 60);
+  let segundos = tempo % 60;
+  let tempoConclusaoHora = String(horas).padStart(2, '0');
+  let tempoConclusaoMinuto = String(minutos).padStart(2, '0');
+  let tempoConclusaoSegundos = String(segundos).padStart(2, '0');
+  tempoConclusao = tempoConclusaoHora + ':' + tempoConclusaoMinuto + ':' + tempoConclusaoSegundos;
+  
+  return `${tempoConclusaoMinuto}:${tempoConclusaoSegundos}`;
+}
+
+function iniciarCronometro() {
+  cronometro = setInterval(() => {
+      tempo++;
+      document.getElementById('cronometro').innerText = formatarTempo(tempo);
+  }, 1000);
+}
+
+function pausarCronometro() {
+  clearInterval(cronometro);
 }

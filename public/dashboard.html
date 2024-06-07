@@ -96,6 +96,33 @@
         </div>
       </div>
     </div>
+
+    <div class="ranking-best-players">
+      <div class="tables">
+        <div class="ranking-movement">
+          <h3 class="main-title small-title">Meu ranking (movimento)</h3>
+          <table id="table_movement_user">
+            <tr>
+              <th><b>Nº</b></th>
+              <th><b>MOVIMENTOS</b></th>
+              <th><b>TEMPO</b></th>
+            </tr>
+          </table>
+        </div>
+
+        <div class="ranking-time">
+          <h3 class="main-title small-title">Meu ranking (tempo)</h3>
+          <table id="table_time_user">
+            <tr>
+              <th><b>Nº</b></th>
+              <th><b>MOVIMENTOS</b></th>
+              <th><b>TEMPO</b></th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </main>
 </body>
 
@@ -176,7 +203,16 @@
         }
       })
       .then(function (partidas) {
-        console.log(partidas);
+        for (let i = 0; i < partidas.length; i++) {
+          const partida = partidas[i];
+          table_movement_user.innerHTML += `
+          <tr>
+            <th>${i + 1}º</th>
+            <td>${partida.qtdMovimento}</td>  
+            <td>${partida.tempoConclusao}</td>
+          </tr>
+          `;
+        }
       })
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
@@ -196,7 +232,16 @@
         }
       })
       .then(function (partidas) {
-        console.log(partidas);
+        for (let i = 0; i < partidas.length; i++) {
+          const partida = partidas[i];
+          table_time_user.innerHTML += `
+          <tr>
+            <th>${i + 1}º</th>
+            <td>${partida.qtdMovimento}</td>  
+            <td>${partida.tempoConclusao}</td>
+          </tr>
+          `;
+        }
       })
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
@@ -244,7 +289,7 @@
           const partida = partidas[i];
           table_movement.innerHTML += `
           <tr>
-            <th>${i +1}º</th>
+            <th>${i + 1}º</th>
             <td>${partida.username}</td>  
             <td>${partida.movimentos}</td>  
           </tr>
@@ -273,7 +318,7 @@
           const partida = partidas[i];
           table_time.innerHTML += `
           <tr>
-            <th>${i +1}º</th>
+            <th>${i + 1}º</th>
             <td>${partida.username}</td>  
             <td>${partida.tempoConclusao}</td>  
           </tr>
@@ -311,7 +356,7 @@
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
- 
+
   function inicializar() {
     pegarAsUltimasDezPartidasDoUsuario()
       .then(

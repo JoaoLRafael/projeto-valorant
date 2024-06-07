@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/estilo.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <script src="./js/sessao.js"></script>
   <title>Jogo da Memória</title>
 </head>
 <body id="memory_game" onload="validarSessao(), aguardar()">
-  <div id="game_board"></div>
+  <div id="cronometro">00:00</div>
+  <div id="game_board">
+  </div>
 
   <div id="game_over">
     <h1 class="main_title">Parabéns, você completou o jogo!</h1>
-    <h2 class="subtitle" id="match_time">Tempo: 00:09:32</h2>
-    <a id="restart" onclick="restartGame()" class="btn_primary"><span class="btn_primary_text">Jogar novamente</span></a>
+    <h2 class="subtitle" id="match_time"></h2>
+    <a id="restart" onclick="restartGame()" class="btn-primary">Jogar novamente</a>
   </div>
 
   <script src="./js/game.js"></script>
